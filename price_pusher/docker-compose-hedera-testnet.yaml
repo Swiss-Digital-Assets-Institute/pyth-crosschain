@@ -1,0 +1,35 @@
+services:
+  price-pusher:
+    # Use this to build the price pusher from source. A dependency of the pusher docker
+    # image is the pyth-crosschain monorepo lerna docker image. Build lerna image
+    # using the following command from the repo root:
+    # `docker buildx build -f Dockerfile.lerna -t lerna .`
+    #
+    # Please note that the docker build from source only works in x86_64 platforms
+    # and doesn't work on arm platforms (like Apple M1/M2).
+    #
+    #build:
+      #context: .
+
+    # Replace <version> with the latest released image of the price pusher from here:
+    # https://gallery.ecr.aws/pyth-network/xc-price-pusher
+    image: hyferion/pyth-price-pusher-hedera:latest
+    restart: always
+    command:
+      - "--"
+      - "evm"
+      - "--endpoint"
+      # Replace this with RPC endpoint URL for the EVM network.
+      - "https://testnet.hashio.io/api"
+      - "--mnemonic-file"
+      - "/config/mnemonic.txt"
+      # Replace this with the address of the Pyth contract on the EVM network.
+      - "--pyth-contract-address"
+      - "0xa2aa501b19aff244d90cc15a4cf739d2725b5729"
+      - "--price-service-endpoint"
+      - "https://hermes.pyth.network" # Replace this with a private Hermes RPC for more reliability
+      - "--price-config-file"
+      - "/config/price_config.yaml"
+    volumes:
+      - ./mnemonic.txt:/config/mnemonic.txt
+      - ./price-config.stable.sample.yaml:/config/price_config.yaml

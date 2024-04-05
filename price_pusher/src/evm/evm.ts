@@ -210,14 +210,13 @@ export class EvmPricePusher implements IPricePusher {
     const txNonce = lastExecutedNonce + 1;
 
     console.log(`Using gas price: ${gasPrice} and nonce: ${txNonce}`);
-
     this.pythContract.methods
       .updatePriceFeedsIfNecessary(
         priceFeedUpdateData,
         priceIdsWith0x,
         pubTimesToPush
       )
-      .send({ value: updateFee, gasPrice, nonce: txNonce })
+      .send({ value: updateFee * 10**10, gasPrice, gasLimit: 3000000, nonce: txNonce })
       .on("transactionHash", (hash: string) => {
         console.log(`Successful. Tx hash: ${hash}`);
       })
@@ -227,6 +226,7 @@ export class EvmPricePusher implements IPricePusher {
           // doesn't return any information why the call has reverted. Assuming that
           // the update data is valid there is no possible rejection cause other than
           // the target chain price being already updated.
+          console.log(err.message);
           console.log(
             "Execution reverted. With high probability, the target chain price " +
               "has already updated, Skipping this push."
@@ -304,7 +304,7 @@ export class EvmPricePusher implements IPricePusher {
 export class PythContractFactory {
   constructor(
     private endpoint: string,
-    private mnemonic: string,
+    private privateKey: string,
     private pythContractAddress: string
   ) {}
 
@@ -376,9 +376,7 @@ export class PythContractFactory {
 
   createWeb3PayerProvider() {
     return new HDWalletProvider({
-      mnemonic: {
-        phrase: this.mnemonic,
-      },
+      privateKeys: [this.privateKey], // Now uses private key
       providerOrUrl: this.createWeb3Provider() as Provider,
     });
   }

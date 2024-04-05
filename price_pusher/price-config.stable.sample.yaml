@@ -1,14 +1,14 @@
-- alias: BTC/USD
-  id: e62df6c8b4a85fe1a67db44dc12de5db330f7ac66b72dc658afedf0f4a415b43
-  time_difference: 60
-  price_deviation: 0.5
+- alias: HBAR/USD
+  id: 3728e591097635310e6341af53db8b7ee42da9b3a8d918f9463ce9cca886dfbd
+  time_difference: 3600
+  price_deviation: 1
   confidence_ratio: 1
-- alias: BNB/USD
-  id: 2f95862b045670cd22bee3114c39763a4a08beeb663b145d283c31d7d1101c4f
-  time_difference: 60
+- alias: USD/CHF
+  id: 0b1e3297e69f162877b577b0d6a47a0d63b2392bc8499e6540da4187a63e28f8
+  time_difference: 3600
   price_deviation: 1
   confidence_ratio: 1
   early_update:
-    time_difference: 30
+    time_difference: 3600
     price_deviation: 0.5
     confidence_ratio: 0.1
