@@ -1,5 +1,5 @@
 services:
-  price-pusher:
+  price-pusher-testnet:
     # Use this to build the price pusher from source. A dependency of the pusher docker
     # image is the pyth-crosschain monorepo lerna docker image. Build lerna image
     # using the following command from the repo root:
