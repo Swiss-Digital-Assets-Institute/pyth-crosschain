@@ -31,5 +31,5 @@ services:
       - "--price-config-file"
       - "/config/price_config.yaml"
     volumes:
-      - ./mnemonic.txt:/config/mnemonic.txt
+      - ./mnemonic-testnet.txt:/config/mnemonic.txt
       - ./price-config.stable.sample.yaml:/config/price_config.yaml
